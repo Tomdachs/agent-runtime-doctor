@@ -36,8 +36,8 @@ agent-runtime-doctor = "agent_runtime_doctor.cli:main"
 [dependency-groups]
 dev = [
     "jsonschema>=4.25,<5",
-    "pytest>=8.4,<9",
-    "ruff>=0.13,<0.14",
+    "pytest>=8.4,<10",
+    "ruff>=0.13,<0.17",
 ]
 
 [tool.hatch.build.targets.wheel]
