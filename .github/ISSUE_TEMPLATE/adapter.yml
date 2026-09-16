@@ -1,0 +1,26 @@
+name: Runtime adapter request
+description: Propose support for another coding-agent runtime
+title: "[adapter] "
+labels: [enhancement, adapter]
+body:
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime
+      placeholder: Example Agent CLI
+    validations:
+      required: true
+  - type: input
+    id: docs
+    attributes:
+      label: Official diagnostics documentation
+      description: Link to official install/doctor/diagnostic documentation or source.
+    validations:
+      required: true
+  - type: textarea
+    id: structured
+    attributes:
+      label: Structured signal
+      description: Describe any stable JSON or non-interactive diagnostic output that can be normalized without copying secrets.
+    validations:
+      required: true
