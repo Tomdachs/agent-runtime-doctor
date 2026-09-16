@@ -36,7 +36,10 @@ Current scope:
 Python 3.11+ is required during the alpha phase.
 
 ```bash
-# From a checkout
+# Run directly from the public repository with uv
+uvx --from git+https://github.com/Tomdachs/agent-runtime-doctor.git agent-runtime-doctor doctor
+
+# Or from a checkout
 uv sync --frozen
 uv run agent-runtime-doctor doctor
 

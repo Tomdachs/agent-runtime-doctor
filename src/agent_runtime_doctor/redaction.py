@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import getpass
 import ipaddress
 import re
 from pathlib import Path
@@ -15,12 +14,13 @@ _SECRET_ASSIGNMENT = re.compile(
 )
 _URL_CREDENTIALS = re.compile(r"(?i)(https?://)([^/@\s]+):([^/@\s]+)@")
 _USER_PATHS = (
-    re.compile(r"(?i)(/home/)[^/\s]+"),
-    re.compile(r"(?i)(/Users/)[^/\s]+"),
-    re.compile(r"(?i)(/mnt/[a-z]/Users/)[^/\s]+"),
-    re.compile(r"(?i)([A-Z]:\\Users\\)[^\\\s]+"),
+    re.compile(r"(?i)/home/[^/\s]+(?:/[^\s,;]+)*"),
+    re.compile(r"(?i)/Users/[^/\s]+(?:/[^\s,;]+)*"),
+    re.compile(r"(?i)/mnt/[a-z]/Users/[^/\s]+(?:/[^\s,;]+)*"),
+    re.compile(r"(?i)[A-Z]:\\Users\\[^\\\s]+(?:\\[^\s,;]+)*"),
 )
 _IPV4 = re.compile(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])")
+_CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
 
 
 def _redact_private_ip(match: re.Match[str]) -> str:
@@ -28,24 +28,21 @@ def _redact_private_ip(match: re.Match[str]) -> str:
         address = ipaddress.ip_address(match.group(0))
     except ValueError:
         return match.group(0)
-    return "<ip>" if address.is_private else match.group(0)
-
-
-_CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+    return "<private-ip>" if address.is_private else match.group(0)
 
 
 def redact_text(value: str, *, limit: int = 300) -> str:
     """Return a single-line, support-safe representation of untrusted command output."""
     text = _CONTROL.sub("", value).replace("\r", " ").replace("\n", " ").strip()
+
+    # Replace the current home first, including descendants, so private workspace names are omitted.
     home = str(Path.home())
     if home:
-        text = text.replace(home, "~").replace(home.replace("/", "\\"), "~")
-    username = getpass.getuser()
-    if username:
-        text = re.sub(rf"(?i)([/\\]Users[/\\]){re.escape(username)}\b", r"\1<user>", text)
-        text = re.sub(rf"(?i)([/\\]home[/\\]){re.escape(username)}\b", r"\1<user>", text)
+        home_pattern = re.compile(rf"{re.escape(home)}(?:[/\\][^\s,;]+)*")
+        text = home_pattern.sub("<user-path>", text)
     for pattern in _USER_PATHS:
-        text = pattern.sub(r"\1<user>", text)
+        text = pattern.sub("<user-path>", text)
+
     text = _EMAIL.sub("<email>", text)
     text = _BEARER.sub("Bearer <redacted>", text)
     text = _KNOWN_TOKEN.sub("<redacted-token>", text)
