@@ -10,7 +10,7 @@ The roadmap prioritizes independent usefulness and upstream-friendly diagnostics
 - [x] Claude Code and Gemini CLI discovery;
 - [x] JSON and Markdown support reports;
 - [x] bounded subprocesses and privacy regression tests;
-- [ ] first tagged release after CI is green.
+- [x] first tagged release after CI is green.
 
 ## v0.2 — broader structured adapters
 

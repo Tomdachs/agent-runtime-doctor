@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "agent-runtime-doctor"
 version = "0.1.0"
-description = "Privacy-minimized, native-first diagnostics for coding-agent runtimes"
+description = "One read-only, privacy-minimized support report for Codex, Claude Code, and Gemini CLI"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
