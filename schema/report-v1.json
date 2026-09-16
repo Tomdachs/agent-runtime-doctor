@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Tomdachs/agent-runtime-doctor/blob/main/schema/report-v1.json",
+  "title": "Agent Runtime Doctor report v1",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "tool_version", "overall_status", "platform", "agents"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "generated_at": {"type": "string"},
+    "tool_version": {"type": "string"},
+    "overall_status": {"enum": ["ok", "warning", "fail"]},
+    "platform": {
+      "type": "object",
+      "required": ["system", "release", "machine", "wsl", "wsl_distribution"],
+      "properties": {
+        "system": {"type": "string"},
+        "release": {"type": "string"},
+        "machine": {"type": "string"},
+        "wsl": {"type": "boolean"},
+        "wsl_distribution": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "display_name", "installed", "version", "native_diagnostics"],
+        "properties": {
+          "id": {"type": "string"},
+          "display_name": {"type": "string"},
+          "installed": {"type": "boolean"},
+          "version": {"type": ["string", "null"]},
+          "native_diagnostics": {
+            "type": "object",
+            "required": ["source", "status", "schema_version", "counts", "issues", "note"],
+            "properties": {
+              "source": {"type": "string"},
+              "status": {"enum": ["ok", "warning", "fail", "unavailable", "unsupported", "error"]},
+              "schema_version": {"type": ["integer", "null"]},
+              "counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+              "issues": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["id", "category", "status", "summary"],
+                  "properties": {
+                    "id": {"type": "string"},
+                    "category": {"type": "string"},
+                    "status": {"enum": ["warning", "fail"]},
+                    "summary": {"type": "string"}
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "note": {"type": ["string", "null"]}
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

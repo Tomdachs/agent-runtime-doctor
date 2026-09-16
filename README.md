@@ -13,7 +13,7 @@ This project provides:
 - one stable, versioned report schema across supported agents;
 - native diagnostic orchestration rather than replacement;
 - privacy-minimized output suitable for a public issue by default;
-- explicit distinction between `ok`, `warning`, `fail`, `unavailable`, and `unsupported`;
+- explicit distinction between `ok`, `warning`, `fail`, `unavailable`, `unsupported`, and `error`;
 - bounded, read-only probes with no automatic permission or configuration repair;
 - a base for future CI and cross-agent environment compatibility checks.
 

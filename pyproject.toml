@@ -34,7 +34,11 @@ Issues = "https://github.com/Tomdachs/agent-runtime-doctor/issues"
 agent-runtime-doctor = "agent_runtime_doctor.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8.4,<9", "ruff>=0.13,<0.14"]
+dev = [
+    "jsonschema>=4.25,<5",
+    "pytest>=8.4,<9",
+    "ruff>=0.13,<0.14",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agent_runtime_doctor"]
