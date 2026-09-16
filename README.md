@@ -1,5 +1,7 @@
 # Agent Runtime Doctor
 
+[![CI](https://github.com/Tomdachs/agent-runtime-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/Tomdachs/agent-runtime-doctor/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Agent Runtime Doctor is a local-first CLI that turns coding-agent health signals into one privacy-minimized support report.
 
 It is intentionally **native-first**: when an agent already ships a doctor command, Agent Runtime Doctor calls that command instead of duplicating its provider-specific logic, then normalizes only the support-safe summary. The first implementation target is Codex, with adapters for additional coding agents following the same boundary.
@@ -61,7 +63,7 @@ Native doctor output is treated as untrusted input. Only an allowlisted summary 
 
 ## Project boundary
 
-Agent Runtime Doctor is **not** an auto-repair tool, agent launcher, policy control plane, or replacement for provider support tooling. See [docs/architecture.md](docs/architecture.md) and [docs/competitive-landscape.md](docs/competitive-landscape.md).
+Agent Runtime Doctor is **not** an auto-repair tool, agent launcher, policy control plane, or replacement for provider support tooling. See [docs/architecture.md](docs/architecture.md), [docs/competitive-landscape.md](docs/competitive-landscape.md), and [ROADMAP.md](ROADMAP.md).
 
 ## Development
 
